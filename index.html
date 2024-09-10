@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue.js ToDo App</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #5e5959;
+    }
+    #app {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 300px;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      background-color: #f9f9f9;
+      margin: 5px 0;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ff4d4d;
+    }
+    input {
+      width: calc(100% - 22px);
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>Lista de Tarefas</h1>
+    <ul>
+      <li v-for="(task, index) in tasks" :key="task.id">
+        {{ task.text }}
+        <button @click="removeTask(index)">Remover</button>
+      </li>
+    </ul>
+    <input v-model="newTask" @keyup.enter="addTask" placeholder="Adicione uma tarefa">
+    <button @click="addTask">Adicionar</button>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        tasks: [
+          { id: 1, text: 'Aprender Vue.js' },
+          { id: 2, text: 'Desenvolver uma aplicação' },
+        ],
+        newTask: ''
+      },
+      methods: {
+        addTask() {
+          if (this.newTask.trim()) {
+            this.tasks.push({ id: this.tasks.length + 1, text: this.newTask });
+            this.newTask = '';
+          }
+        },
+        removeTask(index) {
+          this.tasks.splice(index, 1); // Remove o item da lista
+        }
+      }
+    });
+  </script>
+</body>
+</html>
